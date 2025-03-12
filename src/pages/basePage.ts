@@ -20,6 +20,10 @@ export class BasePage {
 
     succesToast = this.page.getByTestId('alert-popup');
 
+    saveButton = this.page.getByRole('button', { name: 'Save' });
+
+    flashPostTextArea = this.page.getByRole('textbox', { name: 'Enter your flashpost here' });
+
     constructor(protected page: Page) {
         this.page = page;
     }
@@ -39,5 +43,15 @@ export class BasePage {
         await this.page.getByRole('textbox', { name: 'Enter Password' }).pressSequentially(password);
         await this.loginButton.click();
         await expect(this.page.getByTestId('hello')).toBeInViewport();
+    }
+
+    async clickAndVerifyResponse(clickSelector: string, endpointURL: string, errorMessage: string) {
+        const [, response] = await Promise.all([
+            this.page.locator(clickSelector).click(),
+            this.page.waitForResponse(endpointURL),
+        ]);
+        if (!response.ok) {
+            throw new Error(errorMessage);
+        }
     }
 }

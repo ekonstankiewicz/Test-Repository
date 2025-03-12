@@ -14,7 +14,6 @@ let panel: BasePage;
     await panel.registerIntoPanel(user.firstname, user.lastname, user.email, user.password);
     await expect(page.getByRole('heading', { name: 'Login' })).toBeInViewport();
     await panel.loginIntoPanel(user.email, user.password);
-    await expect(page.getByTestId('hello')).toBeInViewport();
     await page.getByTestId('open-articles').click();
     });
 
@@ -30,11 +29,11 @@ let panel: BasePage;
     });
 
     await test.step('Should add comment to article', async () => {
-        const comment = `${'comment'+ Math.random().toString(36).substring(2, 10)}`;
+        const comment = `${'comment'+' '+ Math.random().toString(36).substring(2, 10)}`;
         await page.locator('#add-new').click();
         await page.getByRole('heading', { name: 'Add New Comment' }).click();
         await page.locator('#body').pressSequentially(comment);
-        await page.getByRole('button', { name: 'Save' }).click();
+        await panel.saveButton.click();
         await expect(panel.succesToast).toBeInViewport();
         await page.getByText(comment).scrollIntoViewIfNeeded();
         await expect(page.getByText(comment)).toBeInViewport();
