@@ -1,4 +1,4 @@
-import { Locator, Page, TestInfo, expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 export class BasePage {
 

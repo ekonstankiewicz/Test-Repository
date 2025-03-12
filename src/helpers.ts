@@ -1,5 +1,3 @@
-import { BrowserContext, Page, TestInfo, expect } from '@playwright/test';
-
 export type User = {
     firstname: string;  
     lastname: string;
@@ -15,4 +13,4 @@ export const getUser = (): User => ({
 });
 
 export const getNewEmail = (): string =>
-    `playwright_${new Date().getTime()}_${Math.random()}@mailinator.com`;
+    `playwright_${new Date().getTime()}_${Math.random().toString(36).substring(2, 10)}@mailinator.com`;

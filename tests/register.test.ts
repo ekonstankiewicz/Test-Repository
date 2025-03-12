@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-import { getUser, User } from '../helpers/helpers';
-
-import { BasePage } from '../helpers/pages/basePage';
+import { BasePage } from '../src/pages/basePage';
+import { getUser, User } from '../src/helpers';
 
 test.describe.configure({ mode: 'parallel' });
 let user: User;
