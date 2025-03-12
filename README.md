@@ -53,4 +53,5 @@ yarn playwright show-report
 ```
 
 ## 📌 Notes
-- Ensure the GAD application is running before executing tests. REPO: https://github.com/jaktestowac/gad-gui-api-demo
+- Ensure the GAD application is running before executing tests.
+- The repository for the GAD application is available at: https://github.com/jaktestowac/gad-gui-api-demo.
