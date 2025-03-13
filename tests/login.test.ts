@@ -10,7 +10,7 @@ let panel: BasePage;
   test.beforeEach(async ({ page }) => {
     user = getUser();
     panel = new BasePage(page);
-    await page.goto('http://localhost:3000/register.html');
+    await page.goto(`${process.env.PANEL_URL}/register.html`);
     await panel.registerIntoPanel(user.firstname, user.lastname, user.email, user.password);
     await expect(page.getByRole('heading', { name: 'Login' })).toBeInViewport();
   });
