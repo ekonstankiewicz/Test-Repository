@@ -5,12 +5,14 @@ import { getUser, User } from '../../src/helpers';
 test.describe.configure({ mode: 'parallel' });
 let user: User;
 
+const URL = 'http://localhost:3000';
+
     test.beforeEach(async () => {
     user = getUser();
     });
 
     test('Should get users data', async ({ request }) => {
-    const users = await request.get(`${process.env.PANEL_URL}/api/users`, {
+    const users = await request.get(`${URL}/api/users`, {
         headers: {
         },
         data: {
@@ -33,7 +35,7 @@ let user: User;
 }),
 
     test('Should create user', async ({ request }) => {
-        const users = await request.post(`${process.env.PANEL_URL}/api/users`, {
+        const users = await request.post(`${URL}/api/users`, {
             headers: {
             },
             data: {
@@ -48,7 +50,7 @@ let user: User;
     });
 
     test('Should get specific user data', async ({ request }) => {
-        const users = await request.get(`${process.env.PANEL_URL}/api/users/1`, {
+        const users = await request.get(`${URL}/api/users/1`, {
             headers: {
             },
             data: {
@@ -67,7 +69,7 @@ let user: User;
     });
 
     test('Should not update specific user data without token', async ({ request }) => {
-        const users = await request.put(`${process.env.PANEL_URL}/api/users/1`, {
+        const users = await request.put(`${URL}/api/users/1`, {
             headers: {
             },
             data: {

@@ -5,12 +5,14 @@ import { getUser, User, existingUser } from '../../src/helpers';
 test.describe.configure({ mode: 'parallel' });
 let user: User;
 
+const URL = 'http://localhost:3000';
+
     test.beforeEach(async () => {
     user = getUser();
     });
 
     test('Should return unauthorized error for invalid login attempts', async ({ request }) => {
-    const login = await request.post(`${process.env.PANEL_URL}/api/login`, {
+    const login = await request.post(`${URL}/api/login`, {
         headers: {
         },
         data: {
@@ -26,7 +28,7 @@ let user: User;
     });
 
     test('Should login with existing user account', async ({ request }) => {
-        const login = await request.post(`${process.env.PANEL_URL}/api/login`, {
+        const login = await request.post(`${URL}/api/login`, {
             headers: {
             },
             data: {
@@ -39,7 +41,7 @@ let user: User;
     });
 
     test('Should not get login data without token provided', async ({ request }) => {
-        const login = await request.get(`${process.env.PANEL_URL}/api/login`, {
+        const login = await request.get(`${URL}/api/login`, {
             headers: {
             },
             data: {
