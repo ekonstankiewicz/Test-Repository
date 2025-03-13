@@ -20,10 +20,10 @@ const URL = 'http://localhost:3000';
     });
     expect(users.status()).toBe(200);
     const responseBody = JSON.parse(await users.text());
-    const firstOperatorFromResponse = responseBody[0];
+    const firstUserFromResponse = responseBody[0];
     expect(users.status()).toBe(200);
     expect(users.ok).toBeTruthy();
-    expect(await firstOperatorFromResponse).toEqual(
+    expect(await firstUserFromResponse).toEqual(
         expect.objectContaining({
             id: 1,
             email: "****",
@@ -32,10 +32,10 @@ const URL = 'http://localhost:3000';
             password: "****",
         }),
     );
-}),
+    });
 
-    test('Should create user', async ({ request }) => {
-        const users = await request.post(`${URL}/api/users`, {
+    test('Should create user with valid data', async ({ request }) => {
+         const users = await request.post(`${URL}/api/users`, {
             headers: {
             },
             data: {
@@ -47,6 +47,31 @@ const URL = 'http://localhost:3000';
               },
         });
         expect(users.status()).toBe(201);
+    });
+
+    test('Should not create user without all data provided', async ({ request }) => {
+        const users = await request.post(`${URL}/api/users`, {
+            headers: {
+            },
+            data: {
+                    email: user.email,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    password: user.password
+              },
+        });
+        expect(users.status()).toBe(422);
+        expect(await users.json()).toEqual({
+            error: {
+                message: "One of mandatory field is missing",
+                details: [  
+                    "firstname",
+                    "lastname",
+                    "email",
+                    "avatar"
+                ]
+            }
+        });
     });
 
     test('Should get specific user data', async ({ request }) => {
@@ -80,5 +105,5 @@ const URL = 'http://localhost:3000';
             error: {
               message: "Access token not provided!"
             }
-          });
+        });
     });
