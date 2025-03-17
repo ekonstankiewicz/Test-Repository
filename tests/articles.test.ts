@@ -18,19 +18,20 @@ let panel: BasePage;
     });
 
     test('Should search article from the list', async ({ page }) => {
-    await page.getByTestId('search-input').pressSequentially('playwright');
-    await page.getByTestId('search-button').click();
-    await expect(page.getByRole('link', { name: 'What is Playwright and why' })).toBeInViewport();
+    const article = page.getByRole('link', { name: 'What is Playwright and why' })
+    await panel.searchInput.pressSequentially('playwright');
+    await panel.searchButton.click();
+    await expect(article).toBeInViewport();
     
 
     await test.step('Should open article', async () => {
-        await page.getByRole('link', { name: 'What is Playwright and why' }).click();
+        await article.click();
         await expect(page.getByTestId('article-title')).toBeInViewport();
     });
 
     await test.step('Should add comment to article', async () => {
         const comment = `${'comment'+' '+ Math.random().toString(36).substring(2, 10)}`;
-        await page.locator('#add-new').click();
+        await panel.addNewCommentButton.click();
         await page.getByRole('heading', { name: 'Add New Comment' }).click();
         await page.locator('#body').pressSequentially(comment);
         await panel.saveButton.click();

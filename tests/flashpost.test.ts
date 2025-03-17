@@ -21,25 +21,31 @@ let panel: BasePage;
     test('Should create Flashpost', async ({ page }) => {
         const flashpostText = `${'New flashpost'+' '+ Math.random().toString(36).substring(2, 10)}`;
         const editedFlashpostText = `${'Edited flashpost'+' '+ Math.random().toString(36).substring(2, 10)}`;
-        await page.getByRole('button', { name: 'Create Flashpost' }).click();
+        await panel.addFlashPostButton.click();
         await panel.flashPostTextArea.pressSequentially(flashpostText);
         await page.getByRole('checkbox', { name: 'is public?' }).check();
-        await page.getByRole('button', { name: 'Create', exact: true }).click();
+        await panel.createFlashPostButton.click();
         await expect(page.getByText(flashpostText)).toBeInViewport();
 
         await test.step('Should edit Flashpost', async () => {
         await page.getByText(flashpostText).click();
-        await page.getByRole('button', { name: 'Edit' }).click();
+        await panel.editButton.click();
         await panel.flashPostTextArea.clear();
         await panel.flashPostTextArea.pressSequentially(editedFlashpostText);
-        await page.getByRole('button', { name: 'Update' }).click();
+        await panel.updateButton.click();
+        await expect(page.getByText(editedFlashpostText)).toBeInViewport();
+        });
+
+        await test.step('Added flashpost should be visible in My Flashposts', async () => {
+        await page.getByRole('button', { name: 'My Flashposts' }).click();
         await expect(page.getByText(editedFlashpostText)).toBeInViewport();
         });
 
         await test.step('Should delete Flashpost', async () => {
         await page.getByText(editedFlashpostText).click();
-        await page.getByRole('button', { name: 'Delete' }).click();
+        await panel.deleteButton.click();
         await page.reload();
-        await expect(page.getByText(editedFlashpostText)).not.toBeInViewport();
+        await expect(page.getByText(editedFlashpostText)).toBeHidden();
+        await expect(panel.addFlashPostButton).toBeInViewport();
     });
 });

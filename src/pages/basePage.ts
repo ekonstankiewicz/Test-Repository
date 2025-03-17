@@ -24,6 +24,34 @@ export class BasePage {
 
     flashPostTextArea = this.page.getByRole('textbox', { name: 'Enter your flashpost here' });
 
+    addFlashPostButton = this.page.getByRole('button', { name: 'Create Flashpost', exact: true });
+
+    deleteButton = this.page.getByRole('button', { name: 'Delete' });
+
+    updateButton = this.page.getByRole('button', { name: 'Update' });
+
+    editButton = this.page.getByRole('button', { name: 'Edit' });
+
+    searchInput = this.page.getByTestId('search-input');
+
+    searchButton = this.page.getByTestId('search-button');
+
+    addNewCommentButton = this.page.locator('#add-new');
+
+    createFlashPostButton = this.page.getByRole('button', { name: 'Create', exact: true });
+
+    sendFriendRequestButton = this.page.getByRole('button', { name: 'Send Friend Requests' });
+
+    friendRequestInputButton = this.page.locator("//input[@id='friendRequestInput']/following-sibling::button");
+
+    sendMessageButton = this.page.locator("//textarea[@id='messageInput']/following-sibling::button");
+
+    searchContactsButton = this.page.locator("//input[@id='searchInput']/following-sibling::button");
+
+    sendFriendRequestHeader = this.page.getByText('Provide friends valid email:');
+
+    enterFriendEmailField = this.page.getByRole('textbox', { name: 'Enter friend\'s email' });
+
     constructor(protected page: Page) {
         this.page = page;
     }
